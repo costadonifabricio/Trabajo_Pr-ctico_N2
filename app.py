@@ -1,4 +1,5 @@
 import sys
+import os
 import MySQLdb
 import csv
 
@@ -36,6 +37,14 @@ try:
 except MySQLdb.Error as e:
     print("Error al crear la tabla:", e)
 
+# Ruta de la carpeta para los archivos CSV
+csv_folder = 'C:/Users/fabri/Desktop/csv/provincias'
+
+# Crear la carpeta si no existe
+if not os.path.exists(csv_folder):
+    os.makedirs(csv_folder)
+    print("Carpeta creada exitosamente")
+
 # Ruta del archivo CSV
 csv_file = 'C:/Users/fabri/Desktop/csv/localidades.csv'
 
@@ -67,8 +76,9 @@ for provincia in provincias:
     cursor.execute(f"SELECT localidad FROM provincias WHERE provincia = '{provincia[0]}'")
     localidades = cursor.fetchall()
 
-    # Crear un archivo CSV para la provincia actual
-    with open(f'{provincia_limpia}.csv', 'w', newline='') as file:
+    # Crear un archivo CSV para la provincia actual en la carpeta de los CSV
+    csv_path = os.path.join(csv_folder, f'{provincia_limpia}.csv')
+    with open(csv_path, 'w', newline='') as file:
         writer = csv.writer(file, quoting=csv.QUOTE_NONE, escapechar=' ')
         writer.writerow(["Localidad"])
 
