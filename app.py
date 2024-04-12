@@ -78,7 +78,7 @@ for provincia in provincias:
 
     # Crear un archivo CSV para la provincia actual en la carpeta de los CSV
     csv_path = os.path.join(csv_folder, f'{provincia_limpia}.csv')
-    with open(csv_path, 'w', newline='') as file:
+    with open(csv_path, 'w', newline='', encoding='utf-8') as file:
         writer = csv.writer(file, quoting=csv.QUOTE_NONE, escapechar=' ')
         writer.writerow(["Localidad"])
 
