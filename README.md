@@ -1,6 +1,6 @@
 # Descripción del Código
 
-Este código se conecta a una base de datos MySQL y realiza varias operaciones relacionadas con la creación de tablas, importación de datos desde un archivo CSV y generación de archivos CSV.
+Este código se conecta a una base de datos MySQL el cual debe crearse con el nombre (argentina) y realiza varias operaciones relacionadas con la creación de tablas, importación de datos desde un archivo CSV y generación de archivos CSV.
 
 ## Funcionamiento
 
@@ -26,4 +26,5 @@ Además, asegúrate de tener un servidor MySQL en ejecución.
 ## NOTA
 
 Este código está diseñado para trabajar con una base de datos MySQL y un archivo CSV específico.
+
 
