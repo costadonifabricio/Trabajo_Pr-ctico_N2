@@ -38,27 +38,28 @@ except MySQLdb.Error as e:
     print("Error al crear la tabla:", e)
 
 # Ruta de la carpeta para los archivos CSV
-csv_folder = 'C:/Users/fabri/Desktop/csv/provincias'
+csv_folder = './provincias'
 
 # Crear la carpeta si no existe
 if not os.path.exists(csv_folder):
     os.makedirs(csv_folder)
     print("Carpeta creada exitosamente")
 
-# Ruta del archivo CSV
-csv_file = 'C:/Users/fabri/Desktop/csv/localidades.csv'
+# Leer los datos del archivo CSV
+with open('localidades.csv', 'r') as f:
+    reader = csv.reader(f)
+    next(reader)  # Saltar la cabecera
+    data = [row for row in reader]
 
-# Definir la sentencia SQL para importar los datos del CSV
-sql_import = f"""
-LOAD DATA INFILE '{csv_file}'
-INTO TABLE provincias
-FIELDS TERMINATED BY ','
-(provincia, id, localidad, cp, id_prov_mstr)
+# Definir la sentencia SQL para importar los datos
+sql_import = """
+INSERT INTO provincias (provincia, id, localidad, cp, id_prov_mstr)
+VALUES (%s, %s, %s, %s, %s)
 """
 
 # Ejecutar la sentencia SQL para importar los datos del CSV
 try:
-    cursor.execute(sql_import)
+    cursor.executemany(sql_import, data)
     db.commit()
     print("Datos importados con éxito")
 except MySQLdb.Error as e:
